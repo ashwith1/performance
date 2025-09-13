@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Model Evaluation Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header Section -->
+        <header class="dashboard__header">
+            <div class="container">
+                <h1>Chatbot Model Evaluation Dashboard</h1>
+                <p class="dashboard__subtitle">Comprehensive evaluation across 7 key metrics. Lower scores indicate better performance.</p>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard__main container">
+            <!-- Control Panel -->
+            <aside class="control-panel">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Model Selection</h3>
+                        <div class="model-controls">
+                            <div class="button-group">
+                                <button id="selectAllBtn" class="btn btn--sm btn--outline">Select All</button>
+                                <button id="deselectAllBtn" class="btn btn--sm btn--outline">Deselect All</button>
+                            </div>
+                            <div id="modelCheckboxes" class="model-checkboxes"></div>
+                        </div>
+
+                        <h3>View Mode</h3>
+                        <div class="view-controls">
+                            <button id="radarView" class="btn btn--sm btn--primary view-btn active">Radar Chart</button>
+                            <button id="barView" class="btn btn--sm btn--outline view-btn">Bar Chart</button>
+                            <button id="tableView" class="btn btn--sm btn--outline view-btn">Table View</button>
+                        </div>
+
+                        <h3>Metric Weights</h3>
+                        <div id="metricWeights" class="metric-weights"></div>
+
+                        <div class="export-section">
+                            <button id="exportBtn" class="btn btn--primary btn--full-width">Export View</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Visualization Area -->
+            <section class="visualization-area">
+                <div class="card">
+                    <div class="card__body">
+                        <div id="chartContainer" class="chart-container" style="position: relative; height: 500px;">
+                            <canvas id="mainChart"></canvas>
+                        </div>
+                        <div id="tableView" class="table-view hidden">
+                            <div class="table-container">
+                                <table id="performanceTable" class="performance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Model</th>
+                                            <th>Overall Score</th>
+                                            <th>Hallucination</th>
+                                            <th>Out-of-Scope</th>
+                                            <th>Compliance</th>
+                                            <th>Robustness</th>
+                                            <th>Ambiguity</th>
+                                            <th>Adversarial</th>
+                                            <th>Accuracy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Details Panel -->
+            <aside class="details-panel">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Model Details</h3>
+                        <div id="selectedModelInfo" class="model-info">
+                            <p>Select a model from the chart or checkboxes to view detailed information.</p>
+                        </div>
+
+                        <h3>Metric Explanations</h3>
+                        <div id="metricExplanations" class="metric-explanations">
+                            <div class="metric-item">
+                                <h4>Hallucination Testing</h4>
+                                <p>Tests the model's tendency to fabricate information. Lower scores indicate better factual accuracy.</p>
+                                <span class="metric-scale">0 = No hallucinations, 3 = Frequent hallucinations</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Out-of-Scope Query Testing</h4>
+                                <p>Measures how well models handle questions outside their operational domain.</p>
+                                <span class="metric-scale">0 = Perfect boundary recognition, 6 = Poor out-of-scope handling</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Compliance Testing</h4>
+                                <p>Tests adherence to ethical guidelines, privacy rules, and organizational policies.</p>
+                                <span class="metric-scale">0 = Poor compliance, 3 = Perfect compliance (inverted)</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Robustness to Errors</h4>
+                                <p>Tests how models handle typos, grammar mistakes, or incomplete inputs.</p>
+                                <span class="metric-scale">0 = Very robust, 2 = Poor error handling</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Ambiguity Testing</h4>
+                                <p>Tests how models respond to vague or unclear queries.</p>
+                                <span class="metric-scale">0 = Perfect clarification requests, 6 = Poor ambiguity handling</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Adversarial Testing</h4>
+                                <p>Tests resistance to malicious or confusing prompts designed to break the system.</p>
+                                <span class="metric-scale">0 = Perfect adversarial resistance, 3 = Vulnerable to attacks</span>
+                            </div>
+                            <div class="metric-item">
+                                <h4>Accuracy Testing</h4>
+                                <p>Overall accuracy of responses and task completion.</p>
+                                <span class="metric-scale">0 = Very high accuracy, 2 = Poor accuracy</span>
+                            </div>
+                        </div>
+
+                        <h3>Performance Ranking</h3>
+                        <div id="performanceRanking" class="performance-ranking"></div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
